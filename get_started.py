@@ -133,10 +133,10 @@ def show_conll(str_txt=dafault_txt):
 
 if __name__ == '__main__':
     # split()
-    # ner(True)
+    ner(True)
     # dependency()
     # semantic_dependency()
     # role_tag()
     # show_all_xml()
     # show_all_json()
-    show_conll()
+    # show_conll()
