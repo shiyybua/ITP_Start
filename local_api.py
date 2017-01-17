@@ -29,10 +29,11 @@ def split_words():
 
 
 # 还有很对添加外部字典或者是model的方法，详见文档。
+# http://pyltp.readthedocs.io/zh_CN/latest/api.html
 def spilt_words_with_extra():
     CWS_PATH = PATH + 'cws.model'
     segmentor = Segmentor()  # 初始化实例
-    segmentor.load_with_lexicon(CWS_PATH, PATH + 'extra.txt')  # 加载模型
+    segmentor.load_with_lexicon(CWS_PATH, PATH + 'extra_data.txt')  # 加载模型
     words = segmentor.segment(EXAMPLE_TXT)
     print '\t'.join(words)
     segmentor.release()
@@ -75,3 +76,26 @@ def pos_and_ner():
 # split_words()
 # spilt_words_with_extra()
 pos_and_ner()
+
+'''
+编译训练自定义模型需要在git上下载LTP的C的版本，自行编译。
+CustomizedSegmentor的目的是 加入个性化的分词方案到原有的基础上。所以我们需要自定义分词方案。分词格式如下：
+巴蒂尔      长传球      给大姚      。
+对外      ，       他们      代表      国家      。
+
+这些都需要自己先分好，然后带入训练之中。由于训练是基于机器学习的，所以我们要准备2个文件，一个是train 一个 development. 这个文件内容的格式如上。
+
+运行的命令例子如下：
+./otcws learn --reference extra_data.txt --model extra --development extra_data2.txt
+
+
+def customer():
+    from pyltp import CustomizedSegmentor
+    CWS_PATH = PATH + 'cws.model'
+    customized_segmentor = CustomizedSegmentor()  # 初始化实例
+    customized_segmentor.load(CWS_PATH, '/Users/mac/Documents/ITP/ltp-master/tools/train/extra')  # 加载模型
+    words = customized_segmentor.segment(EXAMPLE_TXT)
+    print '\t'.join(words)
+    customized_segmentor.release()
+
+'''
